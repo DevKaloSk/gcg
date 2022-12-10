@@ -1,5 +1,5 @@
-<?
+<?php
 $db_server = "localhost";
-$db_user = "root"
-$db_pass = ""
-$db_name = "gcg"
+$db_user = "kalo";
+$db_pass = "nBupGww1CLDRTg(H";
+$db_name = "gcg";

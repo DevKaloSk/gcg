@@ -6,23 +6,38 @@ try {
 	if (!$con) {
 		echo '{"codigo":400,"mensaje":"Error intentando conectar","respuesta":""}';
 	} else {
-		$register_user = $_GET['user'];
-		$register_pass = $_GET['pass'];
-		$register_mail = $_GET['mail'];
-		$register_coid = $_GET['connect_id'];
 
-		$sql = "INSERT INTO `gcg_users` (`id`, `user`, `pass`, `mail`, `connect_id`) 
-						VALUES (NULL, '".$register_user."', '".$register_pass."', '".$register_mail."', '".$register_coid."');"
-	
-		if($con->query($sql)===TRUE){
-			echo '{"codigo":200,"mensaje":"Ejecución con éxito","respuesta":""}';
-		} else {
-			echo '{"codigo":1,"mensaje":"Error al crear usuario","respuesta":""}';			
+		if(isset($_GET['user']) && isset($_GET['pass'])) {
+
+			$login_user = $_GET['user'];
+			$login_pass = $_GET['pass'];
+
+			$sql = "SELECT * FROM `gcg_users` 
+					WHERE (user = '".$login_user."' or mail  = '".$login_user."') and pass = '".$login_pass."';";
+			$resultado = $con->query($sql);
+			$texto = '';
+
+			if($resultado->num_rows > 0){
+
+				while($row =  $resultado->fetch_assoc()){
+					$texto = '{
+						"id": '.$row['id'].',
+						"mail": "'.$row['mail'].'",
+						"user": "'.$row['user'].'",
+						"avatar": "'.$row['avatar'].'"
+					}';
+				}
+
+				echo '{"codigo":0,"mensaje":"Ejecución con éxito","respuesta":'.$texto.'}';
+			} else {
+				echo '{"codigo":1,"mensaje":"Usuario/Correo no existe o contraseña incorrectos","respuesta":null}';
+			}
+
+		} else  {
+			echo '{"codigo":-1,"mensaje":"Datos incompletos","respuesta":null}';
 		}
-
 	}	
 } catch (Exception $e){
-	echo '{"codigo":1,"mensaje":"No se pudo registrar el usuario","respuesta":""}';
+	echo '{"codigo":1,"mensaje":"No se pudo registrar el usuario","respuesta":null}';
 }
-
 include '../footer.php';

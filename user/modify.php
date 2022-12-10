@@ -16,8 +16,8 @@ try {
 			$sql = "UPDATE `gcg_users`
 					SET
 					avatar = '".$modify_avatar."',
-					description = '".$modify_description."',
-					VALUES id = '".$modify_id."';"
+					description = '".$modify_description."'
+					WHERE id = '".$modify_id."';";
 		
 			if($con->query($sql)===TRUE){
 				echo '{"codigo":0,"mensaje":"Ejecución con éxito","respuesta":null}';

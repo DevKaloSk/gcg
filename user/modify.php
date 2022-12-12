@@ -4,14 +4,14 @@ try {
 	$con = mysqli_connect($db_server, $db_user, $db_pass, $db_name);
 
 	if (!$con) {
-		echo '{"codigo":400,"mensaje":"Error intentando conectar","respuesta":""}';
+		echo '{"code":404,"message":"Error intentando conectar","data":null}';
 	} else {
 
-		if(isset($_GET['id']) && isset($_GET['avatar']) && isset($_GET['description'])) {
+		if(isset($_POST['id']) && isset($_POST['avatar']) && isset($_POST['description'])) {
 
-			$modify_id = $_GET['id'];
-			$modify_avatar = $_GET['avatar'];
-			$modify_description = $_GET['description'];
+			$modify_id = $_POST['id'];
+			$modify_avatar = $_POST['avatar'];
+			$modify_description = $_POST['description'];
 
 			$sql = "UPDATE `gcg_users`
 					SET
@@ -20,16 +20,16 @@ try {
 					WHERE id = '".$modify_id."';";
 		
 			if($con->query($sql)===TRUE){
-				echo '{"codigo":0,"mensaje":"Ejecución con éxito","respuesta":null}';
+				echo '{"code":0,"message":"Ejecución con éxito","data":null}';
 			} else {
-				echo '{"codigo":1,"mensaje":"Error al modificar usuario","respuesta":null}';
+				echo '{"code":1,"message":"Error al modificar usuario","data":null}';
 			}
 
 		} else  {
-			echo '{"codigo":-1,"mensaje":"Datos incompletos","respuesta":null}';
+			echo '{"code":-1,"message":"Datos incompletos","data":null}';
 		}
 	}	
 } catch (Exception $e){
-	echo '{"codigo":1,"mensaje":"No se pudo registrar el usuario","respuesta":null}';
+	echo '{"code":1,"message":"No se pudo registrar el usuario","data":null}';
 }
 include '../footer.php';

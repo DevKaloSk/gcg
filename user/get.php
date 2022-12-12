@@ -7,13 +7,12 @@ try {
 		echo '{"code":404,"message":"Error intentando conectar","data":null}';
 	} else {
 
-		if(isset($_POST['user']) && isset($_POST['pass'])) {
+		if(isset($_POST['id'])) {
 
-			$login_user = $_POST['user'];
-			$login_pass = $_POST['pass'];
+			$get_id = $_POST['id'];
 
 			$sql = "SELECT * FROM `gcg_users` 
-					WHERE (user = '".$login_user."' or mail  = '".$login_user."') and pass = '".$login_pass."';";
+					WHERE id = '".$get_id."';";
 			$resultado = $con->query($sql);
 			$texto = '';
 
@@ -38,7 +37,7 @@ try {
 				}
 				echo '{"code":0,"message":"Ejecución con éxito","data":'.$texto.'}';
 			} else {
-				echo '{"code":1,"message":"Usuario/Correo no existe o contraseña incorrectos","data":null}';
+				echo '{"code":1,"message":"Usuario no existe","data":null}';
 			}
 
 		} else  {
@@ -46,6 +45,6 @@ try {
 		}
 	}	
 } catch (Exception $e){
-	echo '{"code":1,"message":"No se pudo registrar el usuario","data":null}';
+	echo '{"code":1,"message":"No se pudo obtener el usuario","data":null}';
 }
 include '../footer.php';

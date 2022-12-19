@@ -14,7 +14,7 @@ try {
 
 			$sql = "UPDATE `gcg_users`
 					SET
-					gold = gold + '".$manage_gold."'
+					gold = gold + ".$manage_gold."
 					WHERE id = '".$manage_id."';";
 		
 			if($con->query($sql)===TRUE){

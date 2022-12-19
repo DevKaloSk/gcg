@@ -7,20 +7,21 @@ try {
 		echo '{"code":404,"message":"Error intentando conectar","data":null}';
 	} else {
 
-		if(isset($_POST['id']) && isset($_POST['gems'])) {
+		if(isset($_POST['id']) && isset($_POST['field']) && isset($_POST['value'])) {
 
 			$manage_id = $_POST['id'];
-			$manage_gems = $_POST['gems'];
+			$manage_field = $_POST['field'];
+			$manage_value = $_POST['value'];
 
 			$sql = "UPDATE `gcg_users`
 					SET
-					gems = gems + ".$manage_gems."
+					".$manage_field." = '".$manage_value."'
 					WHERE id = '".$manage_id."';";
 		
 			if($con->query($sql)===TRUE){
 				echo '{"code":0,"message":"Ejecución con éxito","data":null}';
 			} else {
-				echo '{"code":1,"message":"Error al actualizar las gemas","data":null}';
+				echo '{"code":1,"message":"Error al actualizar '.$manage_field.'","data":null}';
 			}
 
 		} else  {

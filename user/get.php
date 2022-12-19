@@ -27,10 +27,10 @@ try {
 						"Description": "'.$row['description'].'",
 						"Gold": "'.$row['gold'].'",
 						"Gems": "'.$row['gems'].'",
-						"ChangeName": "'.$row['changeName'].'",
-						"DoneTutorial": "'.$row['doneTutorial'].'",
-						"DoneFirstDeck": "'.$row['doneFirstDeck'].'",
-						"Avatar": "'.$row['avatar'].'",
+						"ChangeName": '.$row['changeName'].',
+						"DoneTutorial": '.$row['doneTutorial'].',
+						"DoneFirstDeck": '.$row['doneFirstDeck'].',
+						"Registered": "'.$row['registered'].'",
 						"CharacterGems": "'.$row['characterGems'].'",
 						"ArsenalGems": "'.$row['arsenalGems'].'"
 					}';

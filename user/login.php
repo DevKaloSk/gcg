@@ -24,16 +24,17 @@ try {
 						"User": "'.$row['user'].'",
 						"Nick": "'.$row['nick'].'",
 						"Mail": "'.$row['mail'].'",
+						"Avatar": "'.$row['avatar'].'",	
 						"Description": "'.$row['description'].'",
-						"Gold": "'.$row['gold'].'",
-						"Gems": "'.$row['gems'].'",
-						"ChangeName": "'.$row['changeName'].'",
-						"DoneTutorial": "'.$row['doneTutorial'].'",
-						"DoneFirstDeck": "'.$row['doneFirstDeck'].'",
+						"Gold": '.$row['gold'].',
+						"Gems": '.$row['gems'].',
+						"ChangeName": '.$row['changeName'].',
+						"DoneTutorial": '.$row['doneTutorial'].',
+						"DoneFirstDeck": '.$row['doneFirstDeck'].',
 						"Registered": "'.$row['registered'].'",
-						"Avatar": "'.$row['avatar'].'",
-						"CharacterGems": "'.$row['characterGems'].'",
-						"ArsenalGems": "'.$row['arsenalGems'].'"
+						"CharacterGems": '.$row['characterGems'].',
+						"ArsenalGems": '.$row['arsenalGems'].',
+						"MaxBox": '.$row['max_box'].'
 					}';
 				}
 				echo '{"code":0,"message":"Ejecución con éxito","data":'.$texto.'}';

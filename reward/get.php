@@ -11,8 +11,9 @@ try {
 
 			$get_user = $_POST['user'];
 
-			$sql = "SELECT * FROM `gcg_deck_box` 
-					WHERE user = '".$get_user."';";
+			$sql = "SELECT R.* FROM `gcg_reward` as R
+					LEFT OUTER JOIN (SELECT * FROM `gcg_reward_claimed` WHERE user_id = ".$get_user.") as RC on RC.reward_id = R.id 
+					WHERE RC.user_id is null;";
 			$resultado = $con->query($sql);
 			$texto = '[';
 
@@ -20,12 +21,12 @@ try {
 				while($row =  $resultado->fetch_assoc()){
 					$texto .= '{
 						"ID": '.$row['id'].',
-						"User": "'.$row['user'].'",
 						"Name": "'.$row['name'].'",
-						"Icon": "'.$row['icon'].'",
-						"Clans": "'.$row['clans'].'",
-						"TotalCharacter": '.$row['total_character'].',
-						"TotalArsenal": '.$row['total_arsenal'].',
+						"Description": "'.$row['description'].'",
+						"Extra": "'.$row['extra'].'",
+						"Image": "'.$row['image'].'",
+						"Formula": "'.$row['formula'].'",
+						"Registered": "'.$row['registered'].'",
 						"Active": '.$row['active'].'
 					},';
 				}
@@ -33,7 +34,7 @@ try {
 				$texto = str_replace(",]","]",$texto);
 				echo '{"code":0,"message":"Ejecución con éxito","data":'.$texto.'}';
 			} else {
-				echo '{"code":1,"message":"El usuario no tiene cajas","data":null}';
+				echo '{"code":1,"message":"No hay recompenzas por reclamar!","data":null}';
 			}
 
 		} else  {
@@ -41,6 +42,6 @@ try {
 		}
 	}	
 } catch (Exception $e){
-	echo '{"code":1,"message":"No se pudo obtener las cajas","data":null}';
+	echo '{"code":1,"message":"No se pudo obtener el usuario","data":null}';
 }
 include '../footer.php';

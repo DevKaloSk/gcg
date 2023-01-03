@@ -12,7 +12,7 @@ try {
 			$get_user = $_POST['user'];
 
 			$sql = "SELECT * FROM `gcg_deck_box` 
-					WHERE user = '".$get_user."';";
+					WHERE user = '".$get_user."' and active = 1;";
 			$resultado = $con->query($sql);
 			$texto = '[';
 
@@ -20,20 +20,16 @@ try {
 				while($row =  $resultado->fetch_assoc()){
 					$texto .= '{
 						"ID": '.$row['id'].',
-						"User": "'.$row['user'].'",
 						"Name": "'.$row['name'].'",
-						"Icon": "'.$row['icon'].'",
-						"Clans": "'.$row['clans'].'",
-						"TotalCharacter": '.$row['total_character'].',
-						"TotalArsenal": '.$row['total_arsenal'].',
-						"Active": '.$row['active'].'
+						"ListCharacter": "'.$row['list_character'].'",
+						"ListArsenal": "'.$row['list_arsenal'].'"
 					},';
 				}
 				$texto .= ']';
 				$texto = str_replace(",]","]",$texto);
 				echo '{"code":0,"message":"Ejecución con éxito","data":'.$texto.'}';
 			} else {
-				echo '{"code":1,"message":"El usuario no tiene cajas","data":null}';
+				echo '{"code":1,"message":"El usuario no baraja PDF_activate_item(pdfdoc, id)","data":null}';
 			}
 
 		} else  {
@@ -41,6 +37,6 @@ try {
 		}
 	}	
 } catch (Exception $e){
-	echo '{"code":1,"message":"No se pudo obtener las cajas","data":null}';
+	echo '{"code":1,"message":"No se pudo obtener baraja activa","data":null}';
 }
 include '../footer.php';

@@ -7,12 +7,13 @@ try {
 		echo '{"code":404,"message":"Error intentando conectar","data":null}';
 	} else {
 
-		if(isset($_POST['user'])) {
+		if(isset($_POST['id']) && isset($_POST['user'])) {
 
-			$get_user = $_POST['user'];
+			$load_id = $_POST['id'];
+			$load_user = $_POST['user'];
 
 			$sql = "SELECT * FROM `gcg_deck_box` 
-					WHERE user = '".$get_user."';";
+					WHERE id = '".$load_id."' and user = '".$load_user."';";
 			$resultado = $con->query($sql);
 			$texto = '[';
 
@@ -26,7 +27,9 @@ try {
 						"Clans": "'.$row['clans'].'",
 						"TotalCharacter": '.$row['total_character'].',
 						"TotalArsenal": '.$row['total_arsenal'].',
-						"Active": '.$row['active'].'
+						"Active": '.$row['active'].',
+						"ListCharacter": "'.$row['list_character'].'",
+						"ListArsenal": "'.$row['list_arsenal'].'"
 					},';
 				}
 				$texto .= ']';

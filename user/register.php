@@ -14,13 +14,56 @@ try {
 			$register_mail = $_POST['mail'];
 			$register_coid = $_POST['connect_id'];
 
-			$sql = "INSERT INTO `gcg_users` (`id`, `user`, `pass`, `mail`, `connect_id`) 
-					VALUES (NULL, '".$register_user."', '".$register_pass."', '".$register_mail."', '".$register_coid."');";
-		
-			if($con->query($sql)===TRUE){
-				echo '{"code":0,"message":"Ejecución con éxito","data":null}';
+			$sql = "SELECT * FROM `gcg_users` 
+			WHERE user = '".$register_user."' or mail = '".$register_mail."';";
+
+			$resultado = $con->query($sql);
+
+			if($resultado->num_rows == 0){
+
+				$sql = "INSERT INTO `gcg_users` (`id`, `user`, `pass`, `mail`, `connect_id`) 
+						VALUES (NULL, '".$register_user."', '".$register_pass."', '".$register_mail."', '".$register_coid."');";
+			
+				if($con->query($sql)===TRUE){
+
+					$sql = "SELECT * FROM `gcg_users` 
+							WHERE user = '".$register_user."' and mail = '".$register_mail."';";
+
+					$resultado = $con->query($sql);
+					$texto = '';
+
+					if($resultado->num_rows > 0){
+						while($row =  $resultado->fetch_assoc()){
+							$texto = '{
+								"ID": '.$row['id'].',
+								"User": "'.$row['user'].'",
+								"Nick": "'.$row['nick'].'",
+								"Mail": "'.$row['mail'].'",
+								"Avatar": "'.$row['avatar'].'",						
+								"Description": "'.$row['description'].'",
+								"Gold": '.$row['gold'].',
+								"Gems": '.$row['gems'].',
+								"ChangeName": '.$row['changeName'].',
+								"DoneTutorial": '.$row['doneTutorial'].',
+								"DoneFirstDeck": '.$row['doneFirstDeck'].',
+								"Registered": "'.$row['registered'].'",
+								"CharacterGems": '.$row['characterGems'].',
+								"ArsenalGems": '.$row['arsenalGems'].',
+								"MaxBox": '.$row['max_box'].'
+							}';
+						}
+						echo '{"code":0,"message":"Ejecución con éxito","data":'.$texto.'}';
+					} else {
+						echo '{"code":1,"message":"Ocurrio un error al consultar los datos","data":null}';
+					}
+
+				} 
+				else {
+					echo '{"code":1,"message":"Ocurrio un error al registrar al usuario","data":null}';
+				}
+
 			} else {
-				echo '{"code":1,"message":"Error al crear usuario","data":null}';
+				echo '{"code":1,"message":"Usuario y/o correo existen","data":null}';
 			}
 
 		} else  {

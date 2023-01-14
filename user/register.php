@@ -17,9 +17,9 @@ try {
 			$sql = "SELECT * FROM `gcg_users` 
 			WHERE user = '".$register_user."' or mail = '".$register_mail."';";
 
-			$resultado = $con->query($sql);
+			$results = $con->query($sql);
 
-			if($resultado->num_rows == 0){
+			if($results->num_rows == 0){
 
 				$sql = "INSERT INTO `gcg_users` (`id`, `user`, `pass`, `mail`, `connect_id`) 
 						VALUES (NULL, '".$register_user."', '".$register_pass."', '".$register_mail."', '".$register_coid."');";
@@ -29,11 +29,11 @@ try {
 					$sql = "SELECT * FROM `gcg_users` 
 							WHERE user = '".$register_user."' and mail = '".$register_mail."';";
 
-					$resultado = $con->query($sql);
+					$results = $con->query($sql);
 					$texto = '';
 
-					if($resultado->num_rows > 0){
-						while($row =  $resultado->fetch_assoc()){
+					if($results->num_rows > 0){
+						while($row =  $results->fetch_assoc()){
 							$texto = '{
 								"ID": '.$row['id'].',
 								"User": "'.$row['user'].'",

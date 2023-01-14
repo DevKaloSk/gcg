@@ -13,11 +13,11 @@ try {
 
 			$sql = "SELECT * FROM `gcg_users` 
 					WHERE id = '".$get_id."';";
-			$resultado = $con->query($sql);
+			$results = $con->query($sql);
 			$texto = '';
 
-			if($resultado->num_rows > 0){
-				while($row =  $resultado->fetch_assoc()){
+			if($results->num_rows > 0){
+				while($row =  $results->fetch_assoc()){
 					$texto = '{
 						"ID": '.$row['id'].',
 						"User": "'.$row['user'].'",

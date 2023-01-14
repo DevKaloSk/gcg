@@ -7,13 +7,19 @@ try {
 		echo '{"code":404,"message":"Error intentando conectar","data":null}';
 	} else {
 
-		if(isset($_POST['user'])) {
+		if(isset($_POST['user']) && isset($_POST['type'])) {
 
 			$get_user = $_POST['user'];
+			$get_type = $_POST['type'];
 
-			$sql = "SELECT R.* FROM `gcg_reward` as R
-					LEFT OUTER JOIN (SELECT * FROM `gcg_reward_claimed` WHERE user_id = ".$get_user.") as RC on RC.reward_id = R.id 
-					WHERE RC.user_id is null;";
+			if($get_type==1) $sql = "SELECT R.id,R.name,R.description,R.image_box,R.image_icon,R.image_icon,R.pool,R.cost_coin,R.cost_gems,
+									(R.quantity-IFNULL(RC.quantity,0)) as quantity,R.bg_color FROM `gcg_buy_decks` as R 
+									LEFT OUTER JOIN (SELECT DISTINCT RSC.user_id,RSC.buy_id,RSC.type,SUM(RSC.quantity) as quantity
+													FROM `gcg_users_purchases` as RSC 
+													WHERE RSC.user_id = ".$get_user." and RSC.type = ".$get_type."
+													GROUP BY RSC.user_id,RSC.buy_id,RSC.type) as RC 
+													on RC.buy_id = R.id;";
+
 			$results = $con->query($sql);
 			$texto = '[';
 
@@ -23,11 +29,13 @@ try {
 						"ID": '.$row['id'].',
 						"Name": "'.$row['name'].'",
 						"Description": "'.$row['description'].'",
-						"Extra": "'.$row['extra'].'",
-						"Image": "'.$row['image'].'",
-						"Formula": "'.$row['formula'].'",
-						"Registered": "'.$row['registered'].'",
-						"Active": '.$row['active'].'
+						"ImageBox": "'.$row['image_box'].'",
+						"ImageIcon": "'.$row['image_icon'].'",
+						"Pool": "'.$row['pool'].'",
+						"CostCoin": '.$row['cost_coin'].',
+						"CostGems": '.$row['cost_gems'].',
+						"Quantity": '.$row['quantity'].',
+						"BgColor": "'.$row['bg_color'].'"
 					},';
 				}
 				$texto .= ']';

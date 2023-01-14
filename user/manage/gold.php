@@ -20,7 +20,7 @@ try {
 			if($con->query($sql)===TRUE){
 				echo '{"code":0,"message":"Ejecución con éxito","data":null}';
 			} else {
-				echo '{"code":1,"message":"Error al actualizar el dinero","data":null}';
+				echo '{"code":1,"message":"Error al actualizar las monedas","data":null}';
 			}
 
 		} else  {

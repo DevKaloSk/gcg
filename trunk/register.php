@@ -16,9 +16,9 @@ try {
 
 			$sql = "SELECT * FROM `gcg_trunk` 
 			WHERE user = '".$register_user."' and card  = '".$register_card."';";
-			$resultado = $con->query($sql);
+			$results = $con->query($sql);
 
-			if($resultado->num_rows > 0){
+			if($results->num_rows > 0){
 				if($register_type==0) {
 					$sql = "UPDATE `gcg_users`
 							SET
